@@ -42,28 +42,33 @@ SkillNet は熟練者と未熟者の間で経験知見の循環を図り技術�
   - キーワード一致ではなく、AIの「文脈のネットワーク化」で関連知識を網羅。
   - 検索窓に代わり、AIコンシェルジュが過去の熟練者の思考回路へと導く。
 
-## 機能候補
-### 🏃 5つのコア・リレー (Knowledge Relays)
-### 1. Email Relay 〈受動的収集〉
+## 機能候補 （MVPリリースと本リリースの区分を含む）
+### 🔳 ユーザ認証と管理
+1. 【MVP】ユーザ登録 / ログイン
+2. 【MVP】プロフィール管理（熟練者/若手、所属グループなどの属性管理）
+
+### 🔳 5つのリレー (Knowledge Relays)
+1~3は基盤機能(MVPリリース)、4,5はMVPリリース後の本リリースで追加予定
+#### 1. 【MVP】 Email Relay 〈受動的収集〉
 - 外部委託先や社内への技術指示・判断メールのBCCに専用アドレスを入れるだけ。
 - AIが本文から「何を決めたか（結論）」と「なぜか（根拠）」を構造化して保存。
-### 2. Document Relay 〈自動構造化〉
-- 技術提案書、計算書、報告書などのファイルをアップロード。
-- AIが文書内の主要な技術パラメーターや設計思想を解析し、既存ナレッジと紐付け。
-### 3. Chat Relay 〈プロセス要約〉
-- Slack等のチャットツールでの試行錯誤を特定スタンプでピックアップ。
-- 散らばった投稿を一本の「トラブル解決ストーリー」として要約。
-### 4. Q&A Relay 〈対話型継承〉
+#### 2. 【MVP】 Q&A Relay 〈対話型継承〉
 - 熟練者の頭にある「言語化されていないコツ」をAIがインタビュー。
 - カテゴリを選ぶとAIが質問を投げかけ、答えるだけで質の高い継承資料を自動生成。
-### 5. Consult Relay 〈逆引きコンシェルジュ〉
+#### 3. 【MVP】 Consult Relay 〈逆引きコンシェルジュ〉
 - 若手の「何がわからないかわからない」をAIが紐解く。
 - 曖昧な悩みをAIが対話で具体化し、4つのリレーで溜まった膨大な資産から「今必要な知恵」をレコメンド。
+#### 4. 【本リリース】 Document Relay 〈自動構造化〉
+- 技術提案書、計算書、報告書などのファイルをアップロード。
+- AIが文書内の主要な技術パラメーターや設計思想を解析し、既存ナレッジと紐付け。
+#### 5. 【本リリース】Chat Relay 〈プロセス要約〉
+- Slack等のチャットツールでの試行錯誤を特定スタンプでピックアップ。
+- 散らばった投稿を一本の「トラブル解決ストーリー」として要約。
 
-##使用する技術スタック
-#### - Backend: Ruby 3.x / Ruby on Rails 7.x
-#### - Frontend: Hotwire (Turbo/Stimulus), Tailwind CSS
-#### - AI/LLM: OpenAI API (GPT-4o) / LangChain
-#### - Email: Action Mailbox
-#### - Storage: Active Storage (AWS S3)
-#### - Analysis: AI-based Vector Search (関連性検索)
+## 使用する技術スタック
+- Backend: Ruby 3.x / Ruby on Rails 7.x
+- Frontend: Hotwire (Turbo/Stimulus), Tailwind CSS
+- AI/LLM: OpenAI API (GPT-4o) / LangChain
+- Email: Action Mailbox
+- Storage: Active Storage (AWS S3)
+- Analysis: AI-based Vector Search (関連性検索)
