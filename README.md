@@ -65,8 +65,10 @@ SkillNet は熟練者と未熟者の間で経験知見の循環を図り技術�
 - Slack等のチャットツールでの試行錯誤を特定スタンプでピックアップ。
 - 散らばった投稿を一本の「トラブル解決ストーリー」として要約。
 
-### 画面遷移の概要を以下のURLに記述しています。
-- https://www.figma.com/design/9sZP5TRecfGMrMabrF8yOE/SkillNet-%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3-v1.0?node-id=181-210&t=JeQd8mJC1n6xdT4t-1
+### 画面遷移図 および ER図
+- ![SkillNet 画面遷移図](https://www.figma.com/design/9sZP5TRecfGMrMabrF8yOE/SkillNet-%E7%94%BB%E9%9D%A2%E9%81%B7%E7%A7%BB%E5%9B%B3-v1.0?node-id=181-210&t=JeQd8mJC1n6xdT4t-1)
+
+- ![SkillNet ER図](https://gyazo.com/afc20cad33a4b1be61149f9d4be7e775)
 
 ## 使用する技術スタック
 - Backend: Ruby 3.x / Ruby on Rails 7.x
