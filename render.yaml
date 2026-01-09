@@ -3,7 +3,7 @@ services:
   - type: web
     name: skillnet-app # 重複不可。必要に応じて変更してください
     env: docker
-    repo: https://github.com/YOUR_GITHUB_USERNAME/SkillNet_app # 自分のリポジトリURLへ
+    # repo: https://github.com/YOUR_GITHUB_USERNAME/SkillNet_app # 自分のリポジトリURLへ
     plan: free # 無料プラン
     region: singapore # 日本から近いリージョン
     dockerContext: .
