@@ -18,7 +18,7 @@ services:
       # 以前のプロジェクトで volume を使っていたなら、これがあると高速化します
       - bundle_data:/usr/local/bundle:cached
     environment:
-      - RAILS_ENV=development # ここを書き換え
+      - RAILS_ENV=development # ここでローカルは開発モードに固定
       - TZ=Asia/Tokyo
     working_dir: /app
     ports:
