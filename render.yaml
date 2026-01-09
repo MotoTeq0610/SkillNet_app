@@ -1,0 +1,23 @@
+services:
+  # Railsアプリ（Webサービス）の設定
+  - type: web
+    name: skillnet-app # 重複不可。必要に応じて変更してください
+    env: docker
+    # repo: https://github.com/YOUR_GITHUB_USERNAME/SkillNet_app # 自分のリポジトリURLへ
+    plan: free # 無料プラン
+    region: singapore # 日本から近いリージョン
+    dockerContext: .
+    dockerfilePath: ./Dockerfile # 本番用Dockerfileを指定
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: skillnet-db
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false # Renderの管理画面で直接入力します
+
+# データベースの設定
+databases:
+  - name: skillnet-db
+    plan: free
+    region: singapore

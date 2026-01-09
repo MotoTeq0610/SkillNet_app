@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:15
+    platform: linux/arm64  # M4 Mac (Apple Silicon) 用に最適化
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+  web:
+    build: .
+    platform: linux/arm64  # M4 Mac (Apple Silicon) 用に最適化
+
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+      # Renderデプロイ時と構成を合わせやすくするための環境変数
+      # DATABASE_URL: postgres://postgres:password@db:5432/myapp_development
+    volumes:
+      - .:/app
+      # 以前のプロジェクトで volume を使っていたなら、これがあると高速化します
+      - bundle_data:/usr/local/bundle:cached
+    environment:
+      - RAILS_ENV=development # ここでローカルは開発モードに固定
+      - TZ=Asia/Tokyo
+    working_dir: /app
+    ports:
+      - "3001:3000"
+    depends_on:
+      - db
+    tty: true          # binding.pry用
+    stdin_open: true   # binding.pry用
+
+volumes:
+  db_data:
+  bundle_data:
