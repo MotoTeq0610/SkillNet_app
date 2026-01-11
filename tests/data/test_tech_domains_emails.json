@@ -1,0 +1,152 @@
+[
+  {
+    "metadata": {
+      "test_case_id": "TC_011",
+      "test_category": "電気回路系",
+      "test_objective": "高周波回路におけるGNDプレーンの不連続性が引き起こす放射ノイズ（EMI）対策のナレッジ記録。"
+    },
+    "email": {
+      "id": "msg_011",
+      "timestamp": "2026-01-09T17:15:00Z",
+      "from": { "name": "電気設計担当011", "address": "elec_011@example.com" },
+      "subject": "【技術共有】4層基板のL2-GNDプレーンスリットによるノイズ放射について",
+      "body": "お疲れ様です。今回の試作機において、300MHz帯の不要放射が制限値を5dB超えています。調査の結果、信号線がGNDスリットを跨いで配線されている箇所を特定しました。リターンパスの確保を優先したパターン修正が必要です。",
+      "expected_behavior": "「GNDプレーン」「不要放射」等の専門用語がDBに正確に保存・検索可能であること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_012",
+      "test_category": "機械系",
+      "test_objective": "異種金属接触腐食（電食）による締結部の経年劣化リスク。不適合事例のナレッジ化。"
+    },
+    "email": {
+      "id": "msg_012",
+      "timestamp": "2026-01-09T17:45:00Z",
+      "from": { "name": "機械設計担当012", "address": "mech_012@example.com" },
+      "subject": "屋外設置ユニットのボルト締結部における電食発生の報告",
+      "body": "屋外環境下において、アルミ筐体にステンレスボルトを使用している箇所で腐食を確認しました。電位差による電食が原因と考えられます。次期モデルでは絶縁ワッシャーの導入を検討してください。",
+      "expected_behavior": "「電食」「絶縁ワッシャー」等の機械系用語がナレッジとして抽出されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_013",
+      "test_category": "電子回路系",
+      "test_objective": "部品の製造中止（EOL）に伴う代替品選定と特性変化の再検証プロセスのナレッジ。"
+    },
+    "email": {
+      "id": "msg_013",
+      "timestamp": "2026-01-09T18:10:00Z",
+      "from": { "name": "部品管理担当013", "address": "parts_013@example.com" },
+      "subject": "【緊急】TI社製オペアンプのEOL通知と代替品選定の依頼",
+      "body": "現行製品で使用しているオペアンプが来年Q3で生産終了となります。入力オフセット電圧の差がAD変換精度に影響する懸念があります。再検証をお願いします。",
+      "expected_behavior": "EOL管理と回路特性変化に関する議論が正しく保存されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_014",
+      "test_category": "ソフトウェア系",
+      "test_objective": "リアルタイムOS環境下における優先度逆転問題。設計意図とデバッグ知見の記録。"
+    },
+    "email": {
+      "id": "msg_014",
+      "timestamp": "2026-01-09T18:50:00Z",
+      "from": { "name": "ソフト開発担当014", "address": "soft_014@example.com" },
+      "subject": "RTOS制御タスクのハングアップ調査報告（優先度逆転の疑い）",
+      "body": "高優先度の通信タスクが、低優先度のログ書き込みタスクが保持するセマフォの解放待ちによりブロックされています。優先度継承プロトコルの適用が必要です。",
+      "expected_behavior": "「RTOS」「優先度逆転」「セマフォ」等の用語が保持されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_015",
+      "test_category": "電気回路系",
+      "test_objective": "トランスの磁気飽和による突入電流と保護回路設計の教訓。"
+    },
+    "email": {
+      "id": "msg_015",
+      "timestamp": "2026-01-09T19:20:00Z",
+      "from": { "name": "電源設計担当015", "address": "pwr_015@example.com" },
+      "subject": "電源投入時の励磁突入電流による保護回路動作について",
+      "body": "100V入力時の投入タイミングによって、一次側ヒューズが溶断する事例が報告されました。トランスの残留磁束による磁気飽和が原因です。サーミスタによる対策を推奨します。",
+      "expected_behavior": "不具合原因と対策のナレッジが紐付けられること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_016",
+      "test_category": "機械系",
+      "test_objective": "熱応力による溶接部のクラック発生。シミュレーションと実機の差異情報の蓄積。"
+    },
+    "email": {
+      "id": "msg_016",
+      "timestamp": "2026-01-09T20:00:00Z",
+      "from": { "name": "構造解析担当016", "address": "struct_016@example.com" },
+      "subject": "ヒートサイクル試験におけるフレーム溶接部の亀裂発生について",
+      "body": "ヒートサイクル試験において、100サイクル目でステイ溶接部に微細なクラックを確認しました。部材間の応力集中が原因です。形状変更による応力分散を提案します。",
+      "expected_behavior": "「ヒートサイクル」「応力集中」等のキーワードが保存されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_017",
+      "test_category": "電子回路系",
+      "test_objective": "FPGA内部のクロックドメイン交差（CDC）によるメタステーブル状態への対策知見。"
+    },
+    "email": {
+      "id": "msg_017",
+      "timestamp": "2026-01-09T20:30:00Z",
+      "from": { "name": "FPGAエンジニア017", "address": "fpga_017@example.com" },
+      "subject": "非同期クロック乗り換え部におけるメタステーブル対策不足の指摘",
+      "body": "SystemAからSystemBへのデータ転送部において、2段シンクロナイザが未実装であることを確認しました。稀に発生するデータ化けの原因となります。",
+      "expected_behavior": "デジタル論理設計の専門ナレッジとして分類されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_018",
+      "test_category": "ソフトウェア系",
+      "test_objective": "エンディアン不一致によるデータ化け。マルチプラットフォーム連携のナレッジ。"
+    },
+    "email": {
+      "id": "msg_018",
+      "timestamp": "2026-01-09T21:10:00Z",
+      "from": { "name": "通信ソフト担当018", "address": "comm_018@example.com" },
+      "subject": "ARM(Little Endian)と外部通信基板(Big Endian)のデータ齟齬について",
+      "body": "CAN通信におけるセンサーデータの値が、異常に大きく表示されます。ARMはリトルエンディアン、通信IC側はビッグエンディアンとなっており、バイトオーダーの入れ替えが必要です。",
+      "expected_behavior": "「エンディアン」「バイトオーダー」等の通信仕様が記録されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_019",
+      "test_category": "電気回路系",
+      "test_objective": "静電気放電（ESD）に対する保護素子の配置不備とフィールド故障対策。"
+    },
+    "email": {
+      "id": "msg_019",
+      "timestamp": "2026-01-09T21:40:00Z",
+      "from": { "name": "EMC担当019", "address": "emc_019@example.com" },
+      "subject": "USBポートへの静電気試験における通信途絶とラッチアップ",
+      "body": "ESD試験器による4kV印加時に、コントローラICがラッチアップを起こします。TVSダイオードの配置をコネクタ直近に移動し、寄生インダクタンスを最小化する必要があります。",
+      "expected_behavior": "「ESD」「ラッチアップ」等の保護設計ナレッジの蓄積。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_020",
+      "test_category": "機械系",
+      "test_objective": "樹脂成形品のヒケと金型設計の関係。品質とコストの両立ナレッジ。"
+    },
+    "email": {
+      "id": "msg_020",
+      "timestamp": "2026-01-09T22:20:00Z",
+      "from": { "name": "成形技術担当020", "address": "mold_020@example.com" },
+      "subject": "筐体正面パーツのボス裏におけるヒケ発生の改善提案",
+      "body": "リブの板厚が肉厚の70%を超えているため、表面に顕著なヒケが出ています。リブの薄肉化、またはガスアシスト成形の導入を検討してください。",
+      "expected_behavior": "「ヒケ」「金型設計」等の製造技術ナレッジが保存されること。"
+    }
+  }
+]

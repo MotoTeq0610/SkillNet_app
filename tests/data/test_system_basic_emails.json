@@ -1,0 +1,182 @@
+[
+  {
+    "metadata": {
+      "test_case_id": "TC_001",
+      "test_category": "正常系",
+      "test_objective": "一般的なビジネスメールの形式を正しくパースし、差出人、件名、本文をデータベースに保存できることを検証する。"
+    },
+    "email": {
+      "id": "msg_001",
+      "timestamp": "2026-01-09T10:15:00Z",
+      "from": {
+        "name": "テストユーザー001",
+        "address": "user_001@example.com"
+      },
+      "subject": "[問合せ:001] アカウント作成後のログインについて",
+      "body": "お世話になっております。先ほどアカウントを作成したのですが、ログインボタンを押しても反応がありません。ブラウザはChromeを使用しています。ご確認をお願いします。",
+      "expected_behavior": "システムは正常にパースを完了し、ユーザーID 001に関連付けられた問い合わせとしてDBに登録されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_002",
+      "test_category": "境界値分析",
+      "test_objective": "本文が最小文字数（空文字）の場合の挙動を確認し、システムが予期せぬNULLエラーを吐かずに適切にバリデーションを適用するか検証する。"
+    },
+    "email": {
+      "id": "msg_002",
+      "timestamp": "2026-01-09T10:45:00Z",
+      "from": {
+        "name": "テストユーザー002",
+        "address": "user_002@example.com"
+      },
+      "subject": "無題のメール",
+      "body": "",
+      "expected_behavior": "バリデーションエラーとして処理されるか、または空の本文を許容する仕様であれば正常に保存されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_003",
+      "test_category": "エラー推測",
+      "test_objective": "スクリプトタグが含まれるメールを受信した際、サニタイズ処理が行われ、Web画面表示時にXSS（クロスサイトスクリプティング）が発生しないことを検証する。"
+    },
+    "email": {
+      "id": "msg_003",
+      "timestamp": "2026-01-09T11:10:00Z",
+      "from": {
+        "name": "テストユーザー003",
+        "address": "user_003@example.com"
+      },
+      "subject": "重要：設定の確認をお願いします <script>alert('XSS')</script>",
+      "body": "以下のリンクをクリックしてください。<img src=x onerror=alert('BodyXSS')>",
+      "expected_behavior": "HTMLタグが無効化、またはエスケープされて保存・表示されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_004",
+      "test_category": "同値分割",
+      "test_objective": "日本語以外のマルチバイト文字（中国語・韓国語）を含むメールが文字化けせずに正しくUTF-8として保存されるかを検証する。"
+    },
+    "email": {
+      "id": "msg_004",
+      "timestamp": "2026-01-09T11:40:00Z",
+      "from": {
+        "name": "テストユーザー004",
+        "address": "user_004@example.com"
+      },
+      "subject": "こんにちは / Hello / 안녕하세요 / 你好",
+      "body": "多言語混在のテストメールです。안녕하세요, 이 메일은 테스트입니다. 你好，这是一封テスト邮件。",
+      "expected_behavior": "DBの文字コードがUTF-8であることを前提とし、文字化けなく全文字が保存・取得できること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_005",
+      "test_category": "境界値分析",
+      "test_objective": "非常に長い件名（255文字以上）を受信した際、DBのフィールド長制限によってシステムがクラッシュしないか検証する。"
+    },
+    "email": {
+      "id": "msg_005",
+      "timestamp": "2026-01-09T12:20:00Z",
+      "from": {
+        "name": "テストユーザー005",
+        "address": "user_005@example.com"
+      },
+      "subject": "テスト".repeat(100),
+      "body": "件名が極端に長い場合のテストです。",
+      "expected_behavior": "超過分が切り捨てられるか、またはエラーをキャッチしてログに記録し、システム全体を停止させないこと。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_006",
+      "test_category": "正常系",
+      "test_objective": "引用返信（Re:形式）を含むメールにおいて、引用部分（>）と新規メッセージ部分を判別するためのパースが可能か検証する。"
+    },
+    "email": {
+      "id": "msg_006",
+      "timestamp": "2026-01-09T12:45:00Z",
+      "from": {
+        "name": "テストユーザー006",
+        "address": "user_006@example.com"
+      },
+      "subject": "Re: 打ち合わせの日程調整について",
+      "body": "承知いたしました。では15時にお待ちしております。\n\n> 2026-01-09 10:00 テストユーザー001 wrote:\n> 候補日は以下の通りです。",
+      "expected_behavior": "引用記号を含む本文全体が欠落なく保存されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_007",
+      "test_category": "同値分割",
+      "test_objective": "メールアドレスの形式が標準的ではない（引用符を含む名称など）が、RFCに準拠している場合に正しく抽出できるか検証する。"
+    },
+    "email": {
+      "id": "msg_007",
+      "timestamp": "2026-01-09T13:25:00Z",
+      "from": {
+        "name": "\"John Doe, Jr.\"",
+        "address": "john.doe@sub.example.co.jp"
+      },
+      "subject": "特殊な差出人名のテスト",
+      "body": "差出人名にカンマや引用符が含まれるケースのテストです。",
+      "expected_behavior": "差出人名「John Doe, Jr.」が正しく抽出され、DBに保存されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_008",
+      "test_category": "エラー推測",
+      "test_objective": "絵文字を大量に含む本文を受信した際、4バイト文字（Emoji）に対応していない古いDB設定などで保存エラーにならないか検証する。"
+    },
+    "email": {
+      "id": "msg_008",
+      "timestamp": "2026-01-09T14:10:00Z",
+      "from": {
+        "name": "テストユーザー008",
+        "address": "user_008@example.com"
+      },
+      "subject": "お疲れ様です！🌟🚀🔥",
+      "body": "プロジェクトの進捗はどうですか？🌈✨🍣🍺 大丈夫であれば👍をお願いします！",
+      "expected_behavior": "utf8mb4などの設定により、絵文字が一切欠落することなく保存・表示されること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_009",
+      "test_category": "境界値分析",
+      "test_objective": "本文が10,000文字を超える巨大なデータを受信した際、パース処理のタイムアウトやメモリ消費の急増が起きないか検証する。"
+    },
+    "email": {
+      "id": "msg_009",
+      "timestamp": "2026-01-09T14:40:00Z",
+      "from": {
+        "name": "テストユーザー009",
+        "address": "user_009@example.com"
+      },
+      "subject": "【長文】レポートの提出について",
+      "body": "長文テスト：".repeat(2000),
+      "expected_behavior": "メモリオーバーフローを起こさず、ストリーム処理または制限値内での保存が完了すること。"
+    }
+  },
+  {
+    "metadata": {
+      "test_case_id": "TC_010",
+      "test_category": "エラー推測",
+      "test_objective": "本文内に制御文字（ヌル文字など）が混入していた場合に、JSONのパースエラーやDBの挿入エラーが発生しないか検証する。"
+    },
+    "email": {
+      "id": "msg_010",
+      "timestamp": "2026-01-09T15:20:00Z",
+      "from": {
+        "name": "テストユーザー010",
+        "address": "user_010@example.com"
+      },
+      "subject": "システム通知テスト\u0000",
+      "body": "本文に制御文字が含まれています：\u0001\u0002\u0003。これにより処理が中断されないことを確認します。",
+      "expected_behavior": "制御文字が適切に処理または除去され、有効な文字列としてDBに保存されること。"
+    }
+  }
+]

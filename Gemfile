@@ -67,3 +67,8 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+# gem "google-generativeai"
+# gem "google-generative-ai"
+# gem "gemini-ai"
+# gem 'google-generative_ai-api'
+# gem 'google-generativeai'

@@ -1,0 +1,15 @@
+{
+  "metadata": {
+    "test_case_id": "TC_nnn",
+    "test_category": "...",
+    "test_objective": "..."
+  },
+  "email": {
+    "id": "msg_nnn",
+    "timestamp": "YYYY-MM-DDTHH:MM:SSZ",
+    "from": { "name": "テストユーザーnnn", "address": "user_nnn@example.com" },
+    "subject": "...",
+    "body": "...",
+    "expected_behavior": "..."
+  }
+}

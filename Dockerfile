@@ -1,64 +1,60 @@
 # syntax = docker/dockerfile:1
-
-# Make sure RUBY_VERSION matches the Ruby version in .ruby-version and Gemfile
 ARG RUBY_VERSION=3.2.2
 FROM registry.docker.com/library/ruby:$RUBY_VERSION-slim as base
 
-# Rails app lives here
 WORKDIR /rails
 
-# Set production environment
+# 開発のしやすさを優先し、デプロイモードを一時的に解除
 ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_DEPLOYMENT="0" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
-
-# Throw-away build stage to reduce size of final image
+# --- ビルドステージ ---
 FROM base as build
 
-# Install packages needed to build gems
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential git libpq-dev libvips pkg-config
 
-# Install application gems
-COPY Gemfile Gemfile.lock ./
-RUN bundle install && \
-    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+ENV BUNDLE_FROZEN="false"
 
-# Copy application code
+COPY Gemfile Gemfile.lock ./
+RUN bundle config unset deployment && \
+    bundle install && \
+    bundle lock --add-platform aarch64-linux
+
 COPY . .
 
-# Precompile bootsnap code for faster boot times
-RUN bundle exec bootsnap precompile app/ lib/
+# binフォルダをBundler対応に強制書き換え
+RUN chmod +x bin/* && \
+    bundle binstubs railties --force
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
+RUN bundle exec bootsnap precompile app/ lib/
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 
-
-# Final stage for app image
+# --- 実行ステージ ---
 FROM base
 
-# Install packages needed for deployment
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libvips postgresql-client && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Copy built artifacts: gems, application
+# ビルド成果物のコピー
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /rails /rails
 
-# Run and own only the runtime files as a non-root user for security
+# パスの設定：アプリのbinを最優先にする（これで rails c が直打ち可能に！）
+ENV BUNDLE_PATH="/usr/local/bundle"
+ENV PATH="/rails/bin:/usr/local/bundle/bin:${PATH}"
+ENV BUNDLE_DEPLOYMENT="0"
+
+# ユーザー作成と権限設定（ここが重要です！）
 RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
+    chown -R rails:rails db log storage tmp && \
+    rm -rf .bundle/config
+
 USER rails:rails
 
-# Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-
-# Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-# 修正前 CMD ["./bin/rails", "server"]
-# 修正後：
 CMD ["./bin/rails", "server", "-b", "0.0.0.0"]
